@@ -2,13 +2,26 @@ import React, { useState } from 'react';
 
 const ControlledForm = () => {
     const [password, setPassword] = useState('');
+    const [error, setError] = useState('');
     const handleSubmit = (e) => {
         e.preventDefault();
         console.log('Submitted');
+        if (password.length < 6) {
+            setError('6 characters longer Password needed!')
+        } else {
+            setError('');
+        }
     }
-const handlePasswordOnChange = (e) => {
-    console.log(e.target.value);
-}
+    const handlePasswordOnChange = (e) => {
+        console.log(e.target.value);
+        setPassword(e.target.value);
+
+        if (password.length < 6) {
+            setError('Password must be 6 character or longer!')
+        } else {
+            setError('');
+        }
+    }
     return (
         <div>
             <form onSubmit={handleSubmit}>
@@ -18,6 +31,9 @@ const handlePasswordOnChange = (e) => {
                 <br />
                 <input type="submit" value="Submit" />
             </form>
+            <p style={{color: 'red'}}>
+                <small>{error}</small>
+            </p>
         </div>
     );
 };
